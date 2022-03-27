@@ -48,11 +48,13 @@ export class UsersComponent implements OnInit {
 
   EliminarRegistro(email: string) {
 
+    this.functions.PopUpAlert('', 'info', 'Espere por favor', false, true);
     this.service.DataUsuario(email).then(data => {
       this.usuarioelm = data[0];
       this.id = data[1];
       this.usuarioelm.password = this.functions.functionEncryDesc('desencriptar', this.usuarioelm.password);
       this.service.userTokenPass(this.usuarioelm, this.usuarioelm.password).subscribe(tokenpas => {
+        this.functions.PopUpAlertClose();
         Swal.fire({
           title: "¿Estas seguro?",
           text: `Está seguro que desea eliminar el usuario ${this.usuarioelm.email}`,
