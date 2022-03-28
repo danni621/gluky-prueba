@@ -1,0 +1,80 @@
+<div class="container pb-0 h-100">
+    <div class="col-ls-12 col-md-12 col-sm-12">
+        <div class="card card-stretch mb-8 mb-xxl-8">
+            <div class="card-body pb-0">
+                <div class="d-flex flex-column h-100">
+                    <app-header></app-header>
+                    <h3 class="text-dark text-center fs-1 fw-bolder lh-lg">Modificar
+                        <br />Usuario
+                    </h3>
+                    <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom card-rounded-bottom h-150px"
+                        style="background-image:url('assets/media/svg/avatars/043-boy-18.svg')"></div>
+                    <form class="validate-form" (ngSubmit)="Actualizar(f)" #f="ngForm">
+                        <div class="row pt-2">
+                            <div class="col-sm-6 col-ls-6 col-xs-12">
+                                <input type="number" name="identi" [(ngModel)]="usuario.identi" required
+                                    class="form-control" placeholder="Identificación" autocomplete="off">
+                                <span *ngIf="f.submitted && f.controls['identi'].errors"
+                                    class="text-danger animated fadeIn">Identificación obligatorio</span>
+                            </div>
+                            <div class="col-sm-6 col-ls-6 col-xs-12">
+                                <input type="text" name="nombre" [(ngModel)]="usuario.nombre" required
+                                    class="form-control" placeholder="Nombres" autocomplete="off">
+                                <span *ngIf="f.submitted && f.controls['nombre'].errors"
+                                    class="text-danger animated fadeIn">Nombres es obligatorio</span>
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-sm-6 col-ls-6 col-xs-12">
+                                <input type="text" name="apellidos" [(ngModel)]="usuario.apellidos" required
+                                    class="form-control" placeholder="Apellidos" autocomplete="off">
+                                <span *ngIf="f.submitted && f.controls['apellidos'].errors"
+                                    class="text-danger animated fadeIn">Apellidos es obligatorio</span>
+                            </div>
+                            <div class="col-sm-6 col-ls-6 col-xs-12">
+                                <input type="text" name="email" [(ngModel)]="usuario.email" required
+                                    class="form-control" email placeholder="name@example.com" autocomplete="off" disabled>
+                                <span *ngIf="f.submitted && f.controls['email'].errors"
+                                    class="text-danger animated fadeIn">El correo es obligatorio</span>
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-sm-6 col-ls-6 col-xs-12">
+                                <input type="number" name="celular" [(ngModel)]="usuario.celular" required
+                                    class="form-control" placeholder="Celular" autocomplete="off">
+                                <span *ngIf="f.submitted && f.controls['celular'].errors"
+                                    class="text-danger animated fadeIn">El celular es obligatorio</span>
+                            </div>
+                            <div class="col-sm-6 col-ls-6 col-xs-12">
+                                <select name="rol" [(ngModel)]="usuario.rol" required class="form-control">
+                                    <option value="" selected>SELECCIONE ROL</option>
+                                    <option value="Administrador">Administrador</option>
+                                    <option value="Desarrollador">Desarrollador</option>
+                                    <option value="Comercial">Comercial</option>
+                                    <option value="Call Center">Call Center</option>
+                                </select>
+                                <span *ngIf="f.submitted && f.controls['rol'].errors"
+                                    class="text-danger animated fadeIn">Rol es oblligatorio</span>
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="offset-sm-3 col-sm-6">
+                                <input type="password" name="password" [(ngModel)]="usuario.password" required
+                                    minlength="6" class="form-control" placeholder="Password">
+                                <span *ngIf="f.submitted && f.controls['password'].errors"
+                                    class="text-danger animated fadeIn">La contraseña debe de ser más o igual de 8
+                                    letras</span>
+                            </div>
+                        </div>
+                        <div class="text-center pt-7">
+                            <button class="btn btn-primary fw-bolder fs-6 px-7 py-3" type="submit">
+                                Modificar
+                            </button>
+                        </div>
+                        <div class="text-center pt-7"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
