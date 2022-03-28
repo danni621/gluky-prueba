@@ -28,7 +28,7 @@ export class Functions {
   PopUpAlert(title: any, icon: any, text: any, allowOutsideClick: boolean = false, loading: boolean = false) {
 
     Swal.fire({
-      allowOutsideClick: false,
+      allowOutsideClick: allowOutsideClick,
       title: title,
       icon: icon,
       text: text

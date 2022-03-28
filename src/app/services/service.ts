@@ -4,7 +4,16 @@ import { UsuarioModel } from '../models/usuario.model';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { Firestore, doc, query, where, collection, getDocs, addDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+//import { Firestore, doc, query, where, collection, getDocs, addDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+
+import {
+    AngularFireDatabase,
+    AngularFireList,
+    AngularFireObject,
+} from '@angular/fire/compat/database';
+
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+
 
 
 
@@ -15,11 +24,12 @@ export class Service {
 
     userToken: any = "";
 
-    data: any[] = [];
+    data: AngularFirestoreCollection<UsuarioModel>;
 
     constructor(private http: HttpClient,
         private router: Router,
-        private firestore: Firestore) {
+        private firestore: AngularFirestore) {
+        this.data = firestore.collection('/usuarios');
         this.leerToken();
     }
 
@@ -39,37 +49,12 @@ export class Service {
         );
     }
 
-    DataUsuarios() {
-        this.data = [];
-        return new Promise<any>((resolve, reject) => {
-            const querySnapshot = getDocs(collection(this.firestore, "usuarios")).then(resp => {
-                resp.forEach((doc) => {
-                    this.data.push(doc.data());
-                });
-
-                resolve(this.data);
-            })
-        });
+    DataUsuarios(): AngularFirestoreCollection<UsuarioModel> {
+        return this.data;
     }
 
-    DataUsuario(email: string) {
-        this.data = [];
-        return new Promise<any>((resolve, reject) => {
-            const q = query(collection(this.firestore, "usuarios"), where("email", "==", email));
-            const querySnapshot = getDocs(q).then(resp => {
-                resp.forEach((doc) => {
-                    this.data.push(doc.data());
-                    this.data.push(doc.id);
-                });
-
-                resolve(this.data);
-            })
-        });
-    }
-
-    async RegisterUsuario(usuario: UsuarioModel) {
-
-        const docRef = await addDoc(collection(this.firestore, "usuarios"), {
+    RegisterUsuario(usuario: any) {
+        this.data.add({
             apellidos: usuario.apellidos,
             celular: usuario.celular,
             email: usuario.email,
@@ -80,11 +65,8 @@ export class Service {
         });
     }
 
-    async ActualizarUsuario(usuario: UsuarioModel, id: string) {
-
-        const dataupdate = doc(this.firestore, "usuarios", id);
-
-        await updateDoc(dataupdate, {
+    ActualizarUsuario(usuario: any, id: string) {
+        this.data.doc(id).update({
             apellidos: usuario.apellidos,
             email: usuario.email,
             celular: usuario.celular,
@@ -93,15 +75,10 @@ export class Service {
             password: usuario.password,
             rol: usuario.rol,
         });
-
     }
 
-    async DeleteUser(id: string) {
-
-        const dataupdate = doc(this.firestore, "usuarios", id);
-
-        await deleteDoc(dataupdate);
-
+    DeleteUser(id: string) {
+        this.data.doc(id).delete();
     }
 
 
@@ -119,18 +96,18 @@ export class Service {
         );
     }
 
-    userTokenPass(usuario:UsuarioModel, oldpass:string){
+    userTokenPass(usuario: UsuarioModel, oldpass: string) {
         const authData = {
-          email: usuario.email,
-          password: oldpass,
-          returnSecureToken: true
+            email: usuario.email,
+            password: oldpass,
+            returnSecureToken: true
         }
-        return this.http.post(`${environment.url}signInWithPassword?key=${environment.apiKey}`,authData).pipe(
-          map((resp: any)=>{
-            return resp['idToken'];
-          })
+        return this.http.post(`${environment.url}signInWithPassword?key=${environment.apiKey}`, authData).pipe(
+            map((resp: any) => {
+                return resp['idToken'];
+            })
         );
-      }
+    }
 
     private guardarToken(idToken: string) {
         this.userToken = idToken;
@@ -142,31 +119,31 @@ export class Service {
     }
 
 
-  UpdatePassFire(idtoken:string,pass:string){
+    UpdatePassFire(idtoken: string, pass: string) {
 
-    const authData = {
-      idToken: idtoken,
-      password: pass,
-      returnSecureToken: true
+        const authData = {
+            idToken: idtoken,
+            password: pass,
+            returnSecureToken: true
+        }
+        return this.http.post(`${environment.url}update?key=${environment.apiKey}`, authData).pipe(
+            map(resp => {
+                return resp;
+            })
+        );
     }
-    return this.http.post(`${environment.url}update?key=${environment.apiKey}`,authData).pipe(
-      map( resp =>{
-        return resp;
-      })
-    );
-  }
 
-  DeleteUserAuth(idtoken:string){
+    DeleteUserAuth(idtoken: string) {
 
-    const authData = {
-      idToken: idtoken,
+        const authData = {
+            idToken: idtoken,
+        }
+        return this.http.post(`${environment.url}delete?key=${environment.apiKey}`, authData).pipe(
+            map(resp => {
+                return resp;
+            })
+        );
     }
-    return this.http.post(`${environment.url}delete?key=${environment.apiKey}`,authData).pipe(
-      map( resp =>{
-        return resp;
-      })
-    );
-  }
 
 
     leerToken() {

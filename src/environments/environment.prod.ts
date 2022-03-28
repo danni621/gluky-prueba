@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   url : 'https://identitytoolkit.googleapis.com/v1/accounts:',
   apiKey : 'AIzaSyAYX-WFse4tv8zME5szgFihSpuBT3rC3-k',
   urlusers : 'https://gluky-app-prueba-default-rtdb.firebaseio.com/',

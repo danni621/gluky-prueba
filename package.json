@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
+    "@firebase/app": "^0.7.20",
     "crypto-js": "^4.1.1",
     "firebase": "^8.10.1",
     "rxjs": "~7.4.0",

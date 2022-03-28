@@ -100,6 +100,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "app-prueba-gluky:build:production",
+            "firebaseProject": "gluky-app-prueba",
+            "firebaseHostingSite": "gluky-app-prueba"
+          }
         }
       }
     }
