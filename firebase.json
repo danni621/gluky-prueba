@@ -1,1 +1,10 @@
-{}
+{
+  "hosting": {
+    "public": "dist/app-prueba-gluky",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
