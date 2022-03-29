@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
         text: `Usuario Creado con exito`,
         icon: 'success',
         showConfirmButton: true,
-        showCancelButton: true
+        showCancelButton: false
       }).then(resp => {
         if (resp.value) {
           this.service.RegisterUsuario(this.usuario);

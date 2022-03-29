@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'users'    , component: UsersComponent, canActivate: [Guard]  },
   { path: 'register'    , component: RegisterComponent, canActivate: [Guard]  },
   { path: 'modrgtr'    , component: ModrgtrComponent, canActivate: [Guard]  },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({
